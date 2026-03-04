@@ -66,50 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ----------------------------------------
        GOOGLE SIGN-IN CALLBACK
        ---------------------------------------- */
-    window.handleGoogleLogin = async function (response) {
-        if (!response || !response.credential) {
-            console.error('Google Sign-In failed or missing credential');
-            return;
-        }
-
-        try {
-            // Send the ID token to our backend
-            const res = await fetch('https://load-backend-k7na.onrender.com/api/auth/google', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ credential: response.credential })
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                throw new Error(data.error || 'Authentication failed');
-            }
-
-            // Save token and user data to localStorage
-            localStorage.setItem('load_token', data.token);
-            localStorage.setItem('load_user', JSON.stringify(data.user));
-
-            // Transition out and navigate to onboarding
-            const loginContainer = document.querySelector('.login-container');
-            if (loginContainer) {
-                loginContainer.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0, 1)';
-                loginContainer.style.opacity = '0';
-                loginContainer.style.transform = 'translateX(-60px)';
-            }
-
-            setTimeout(() => {
-                window.location.href = 'pages/onboarding.html';
-            }, 500);
-
-        } catch (error) {
-            console.error('Login error:', error);
-            alert('Failed to login. Please ensure the backend is running and you have a valid Google Client ID.');
-        }
-    };
-
     // Inject ripple keyframes
     const style = document.createElement('style');
     style.textContent = `
@@ -122,3 +78,53 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.head.appendChild(style);
 });
+
+/* ----------------------------------------
+   GOOGLE SIGN-IN CALLBACK
+   Must be outside DOMContentLoaded so the async
+   Google script can find it immediately
+   ---------------------------------------- */
+window.handleGoogleLogin = async function (response) {
+    if (!response || !response.credential) {
+        console.error('Google Sign-In failed or missing credential');
+        return;
+    }
+
+    try {
+        // Send the ID token to our backend
+        const res = await fetch('https://load-backend-k7na.onrender.com/api/auth/google', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ credential: response.credential })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error(data.error || 'Authentication failed');
+        }
+
+        // Save token and user data to localStorage
+        localStorage.setItem('load_token', data.token);
+        localStorage.setItem('load_user', JSON.stringify(data.user));
+
+        // Transition out and navigate to onboarding
+        const loginContainer = document.querySelector('.login-container');
+        if (loginContainer) {
+            loginContainer.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0, 1)';
+            loginContainer.style.opacity = '0';
+            loginContainer.style.transform = 'translateX(-60px)';
+        }
+
+        setTimeout(() => {
+            window.location.href = 'pages/onboarding.html';
+        }, 500);
+
+    } catch (error) {
+        console.error('Login error:', error);
+        alert('Failed to login. Please ensure the backend is running and you have a valid Google Client ID.');
+    }
+};
+};
