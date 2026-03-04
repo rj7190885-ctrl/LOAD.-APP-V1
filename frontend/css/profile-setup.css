@@ -1,0 +1,528 @@
+/* ========================================
+   LOAD App - Profile Setup Screens
+   Shared styles for Gender, Body, Contact
+   Dark Theme · iOS Bold Typography
+   ======================================== */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-primary: #000000;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.50);
+    --text-tertiary: rgba(255, 255, 255, 0.25);
+    --accent-red: #e63946;
+    --btn-bg: #ffffff;
+    --btn-text: #000000;
+    --card-bg: rgba(255, 255, 255, 0.04);
+    --card-border: rgba(255, 255, 255, 0.06);
+    --card-active-border: rgba(255, 255, 255, 0.25);
+    --card-active-bg: rgba(255, 255, 255, 0.08);
+    --glow-blue: rgba(66, 133, 244, 0.08);
+    --glow-green: rgba(52, 168, 83, 0.06);
+    --input-bg: rgba(255, 255, 255, 0.04);
+    --input-border: rgba(255, 255, 255, 0.08);
+    --input-focus-border: rgba(255, 255, 255, 0.3);
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ========================================
+   Background Glow
+   ======================================== */
+.bg-glow {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+}
+
+.glow-1 {
+    width: 280px;
+    height: 280px;
+    background: var(--glow-blue);
+    top: 15%;
+    right: -80px;
+    opacity: 0.6;
+    animation: glowPulse 10s ease-in-out infinite alternate;
+}
+
+.glow-2 {
+    width: 220px;
+    height: 220px;
+    background: var(--glow-green);
+    bottom: 20%;
+    left: -60px;
+    opacity: 0.5;
+    animation: glowPulse 12s ease-in-out 3s infinite alternate;
+}
+
+@keyframes glowPulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.4;
+    }
+
+    100% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+}
+
+/* ========================================
+   Screen Layout
+   ======================================== */
+.profile-screen {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 60px 32px 48px;
+    opacity: 0;
+    animation: screenSlideIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+}
+
+@keyframes screenSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(60px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ========================================
+   Brand Mark
+   ======================================== */
+.brand-mark {
+    margin-bottom: 0;
+    opacity: 0;
+    animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+}
+
+.brand-text {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+}
+
+.brand-dot {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--accent-red);
+}
+
+/* ========================================
+   Step Indicator
+   ======================================== */
+.step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 28px 0 8px;
+    opacity: 0;
+    animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
+}
+
+.step-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.step-dot.active {
+    width: 24px;
+    border-radius: 4px;
+    background: var(--accent-red);
+}
+
+.step-dot.completed {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+/* ========================================
+   Title Section
+   ======================================== */
+.title-section {
+    padding: 16px 0 28px;
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+}
+
+.slide-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    line-height: 1.15;
+}
+
+.slide-subtitle {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.accent-dot {
+    color: var(--accent-red);
+    font-weight: 700;
+}
+
+/* ========================================
+   Gender Selection Cards
+   ======================================== */
+.gender-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.65s forwards;
+}
+
+.gender-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: var(--card-bg);
+    border: 1.5px solid var(--card-border);
+    border-radius: 18px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.gender-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.gender-card.selected {
+    background: var(--card-active-bg);
+    border-color: var(--card-active-border);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.gender-card.selected .gender-radio {
+    border-color: var(--btn-bg);
+    background: var(--btn-bg);
+}
+
+.gender-card.selected .gender-radio::after {
+    transform: scale(1);
+}
+
+.gender-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 14px;
+    font-size: 1.4rem;
+}
+
+.gender-info {
+    flex: 1;
+}
+
+.gender-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.2px;
+}
+
+.gender-radio {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gender-radio::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--bg-primary);
+    transform: scale(0);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ========================================
+   Input Fields (Weight, Height, Username, Mobile)
+   ======================================== */
+.form-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.65s forwards;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.input-label .optional-tag {
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    color: rgba(255, 255, 255, 0.15);
+    font-size: 0.75rem;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-field {
+    width: 100%;
+    padding: 18px 20px;
+    background: var(--input-bg);
+    border: 1.5px solid var(--input-border);
+    border-radius: 16px;
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    -webkit-appearance: none;
+}
+
+.input-field::placeholder {
+    color: rgba(255, 255, 255, 0.15);
+    font-weight: 400;
+}
+
+.input-field:focus {
+    border-color: var(--input-focus-border);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.03);
+}
+
+.input-unit {
+    position: absolute;
+    right: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    pointer-events: none;
+}
+
+.input-row {
+    display: flex;
+    gap: 12px;
+}
+
+.input-row .input-group {
+    flex: 1;
+}
+
+/* ========================================
+   CTA Section
+   ======================================== */
+.cta-section {
+    padding-top: 24px;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards;
+}
+
+.continue-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 18px 32px;
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: none;
+    border-radius: 16px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.continue-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 255, 255, 0.15);
+}
+
+.continue-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.continue-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-arrow {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.continue-btn:hover:not(:disabled) .btn-arrow {
+    transform: translateX(4px);
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 12px;
+    transition: color 0.3s ease;
+    letter-spacing: 0.2px;
+}
+
+.back-btn:hover {
+    color: var(--text-secondary);
+}
+
+/* ========================================
+   Animations
+   ======================================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   Responsive
+   ======================================== */
+@media (max-width: 480px) {
+    .profile-screen {
+        padding: 48px 24px 40px;
+    }
+
+    .slide-title {
+        font-size: 1.5rem;
+    }
+
+    .slide-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .gender-card {
+        padding: 18px;
+    }
+}
+
+@media (max-width: 360px) {
+    .profile-screen {
+        padding: 40px 20px 32px;
+    }
+
+    .slide-title {
+        font-size: 1.35rem;
+    }
+
+    .continue-btn {
+        padding: 16px 24px;
+        font-size: 1rem;
+        border-radius: 14px;
+    }
+}
+
+@media (min-width: 600px) {
+    .profile-screen {
+        max-width: 540px;
+        margin: 0 auto;
+    }
+}

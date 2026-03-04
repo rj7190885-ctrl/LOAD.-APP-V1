@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOAD - Recovery Dashboard</title>
+    <meta name="description"
+        content="Your daily fitness recovery dashboard — track recovery score, strain, and key metrics.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="dash-header">
+        <div class="header-left">
+            <span class="header-brand">LOAD<span class="header-dot">.</span></span>
+        </div>
+        <div class="header-right">
+            <span id="header-greeting" class="header-greeting">Good evening</span>
+        </div>
+    </header>
+
+    <main class="dash-main">
+
+        <!-- HERO: Recovery Score -->
+        <section class="section recovery-section">
+            <div class="recovery-ring-wrapper">
+                <svg class="recovery-ring" viewBox="0 0 200 200">
+                    <circle class="ring-bg" cx="100" cy="100" r="88" />
+                    <circle id="ring-progress" class="ring-progress" cx="100" cy="100" r="88" stroke-dasharray="553"
+                        stroke-dashoffset="553" />
+                </svg>
+                <div class="recovery-value-block">
+                    <span id="recovery-score" class="recovery-score">--</span>
+                    <span class="recovery-unit">/ 100</span>
+                </div>
+            </div>
+            <div id="recovery-label" class="recovery-label">Calculating...</div>
+            <p id="recovery-sub" class="recovery-sub">Analyzing your recovery data</p>
+        </section>
+
+        <!-- STRAIN SECTION -->
+        <section class="section strain-section">
+            <h2 class="section-title">Daily Strain</h2>
+            <div class="strain-hero">
+                <span id="strain-score" class="strain-score">--</span>
+                <span class="strain-max">/ 21</span>
+            </div>
+            <div class="strain-bar-track">
+                <div id="strain-bar" class="strain-bar-fill" style="width: 0%"></div>
+            </div>
+            <div class="strain-details">
+                <div class="strain-detail-item">
+                    <span class="strain-detail-label">Active Minutes</span>
+                    <span id="active-minutes" class="strain-detail-value">--</span>
+                </div>
+                <div class="strain-detail-item">
+                    <span class="strain-detail-label">HR Zone Time</span>
+                    <span id="hr-zone-time" class="strain-detail-value">--</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- KEY METRICS GRID -->
+        <section class="section metrics-section">
+            <h2 class="section-title">Key Metrics</h2>
+            <div class="metrics-grid" id="metrics-grid">
+                <!-- Filled by JS -->
+            </div>
+        </section>
+
+        <!-- TRENDS -->
+        <section class="section trends-section">
+            <h2 class="section-title">7-Day Trends</h2>
+
+            <div class="trend-card">
+                <h3 class="trend-card-title">Resting Heart Rate</h3>
+                <svg id="rhr-chart" class="trend-chart" viewBox="0 0 320 120" preserveAspectRatio="none"></svg>
+            </div>
+
+            <div class="trend-card">
+                <h3 class="trend-card-title">Recovery Score</h3>
+                <svg id="recovery-chart" class="trend-chart" viewBox="0 0 320 120" preserveAspectRatio="none"></svg>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Tooltip -->
+    <div id="tooltip" class="tooltip hidden">
+        <p id="tooltip-text"></p>
+    </div>
+
+    <script src="../js/dashboard.js"></script>
+</body>
+
+</html>

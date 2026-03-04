@@ -1,0 +1,117 @@
+/* ========================================
+   LOAD App - Legal Pages Styles
+   Terms & Privacy
+   ======================================== */
+
+:root {
+    --bg-primary: #0a0a0a;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --accent-red: #e63946;
+    --link-color: #ff3333;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+.legal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.back-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.back-link:hover {
+    color: var(--text-primary);
+}
+
+.legal-brand {
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.brand-dot {
+    color: var(--accent-red);
+}
+
+.legal-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 24px;
+}
+
+.legal-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.legal-meta {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 40px;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-top: 40px;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+h3 {
+    font-size: 1.2rem;
+    margin-top: 24px;
+    margin-bottom: 12px;
+}
+
+p {
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+}
+
+ul {
+    margin-bottom: 16px;
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+}
+
+.email-link {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.email-link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .legal-header {
+        padding: 20px;
+    }
+
+    .legal-title {
+        font-size: 2rem;
+    }
+}

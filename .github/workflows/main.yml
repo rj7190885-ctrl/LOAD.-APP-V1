@@ -1,0 +1,37 @@
+name: LOAD App CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: backend/package-lock.json
+
+    - name: Install Dependencies
+      run: |
+        cd backend
+        npm install
+
+    - name: Run Backend (Basic Health Check)
+      run: |
+        cd backend
+        node server.js &
+        sleep 5
+        curl -f http://localhost:5000/api/health || exit 1

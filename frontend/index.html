@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOAD - Sign In</title>
+    <meta name="description" content="Sign in to your LOAD account to continue your fitness journey.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+
+<body>
+    <!-- Splash Screen Intro Animation -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-logo">
+            <span class="splash-logo-text">LOAD</span><span class="splash-logo-dot">.</span>
+        </div>
+    </div>
+
+    <!-- Animated liquid glass background blobs -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <div class="login-container">
+        <!-- Liquid Glass Card -->
+        <div class="glass-card">
+            <!-- Liquid glass shimmer overlay -->
+            <div class="glass-shimmer"></div>
+            <div class="glass-refraction"></div>
+
+            <!-- Logo -->
+            <div class="logo-container">
+                <div class="logo">
+                    <span class="logo-text">LOAD</span><span class="logo-dot">.</span>
+                </div>
+            </div>
+
+            <!-- Welcome Text -->
+            <div class="welcome-section">
+                <h1 class="welcome-title">Welcome Back</h1>
+                <p class="welcome-subtitle">Sign in to continue</p>
+            </div>
+
+            <!-- Divider -->
+            <div class="divider-section">
+                <div class="divider-line"></div>
+            </div>
+
+            <!-- Google Sign In Button Container -->
+            <!-- We will render the Google button dynamically using JS so we can style the container -->
+            <div id="g_id_onload"
+                data-client_id="1090915811456-1iua0j1fstmnb0ul7gtfk8h5n7j6pf16.apps.googleusercontent.com"
+                data-context="signin" data-ux_mode="popup" data-callback="handleGoogleLogin" data-auto_prompt="false">
+            </div>
+
+            <!-- Custom Wrapper around Google Button -->
+            <div class="google-btn-wrapper"
+                style="display: flex; justify-content: center; width: 100%; margin: 15px 0; overflow: hidden; border-radius: 14px;">
+                <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="filled_black"
+                    data-text="continue_with" data-size="large" data-logo_alignment="left" data-width="340">
+                </div>
+            </div>
+
+            <!-- Terms & Privacy -->
+            <p class="terms-text">
+                By signing up, you agree to our <a href="pages/terms.html" class="terms-link">Terms &amp; Conditions</a>
+                and
+                acknowledge our <a href="pages/privacy.html" class="terms-link">Privacy Policy</a>.
+            </p>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>

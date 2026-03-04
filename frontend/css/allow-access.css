@@ -1,0 +1,413 @@
+/* ========================================
+   LOAD App - Allow Access Screen
+   Dark Theme · iOS Bold Typography
+   ======================================== */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-primary: #000000;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.50);
+    --text-tertiary: rgba(255, 255, 255, 0.25);
+    --accent-red: #e63946;
+    --accent-green: #34A853;
+    --btn-bg: #ffffff;
+    --btn-text: #000000;
+    --card-bg: rgba(255, 255, 255, 0.04);
+    --card-border: rgba(255, 255, 255, 0.06);
+    --glow-blue: rgba(66, 133, 244, 0.08);
+    --glow-green: rgba(52, 168, 83, 0.06);
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ========================================
+   Background Glow
+   ======================================== */
+.bg-glow {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+}
+
+.glow-1 {
+    width: 280px;
+    height: 280px;
+    background: var(--glow-blue);
+    top: 15%;
+    right: -80px;
+    opacity: 0.6;
+    animation: glowPulse 10s ease-in-out infinite alternate;
+}
+
+.glow-2 {
+    width: 220px;
+    height: 220px;
+    background: var(--glow-green);
+    bottom: 20%;
+    left: -60px;
+    opacity: 0.5;
+    animation: glowPulse 12s ease-in-out 3s infinite alternate;
+}
+
+@keyframes glowPulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.4;
+    }
+
+    100% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+}
+
+/* ========================================
+   Screen Layout
+   ======================================== */
+.access-screen {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 60px 32px 48px;
+    opacity: 0;
+    animation: screenSlideIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+}
+
+@keyframes screenSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(60px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ========================================
+   Brand Mark
+   ======================================== */
+.brand-mark {
+    margin-bottom: 0;
+    opacity: 0;
+    animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+}
+
+.brand-text {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+}
+
+.brand-dot {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--accent-red);
+}
+
+/* ========================================
+   Shield Icon
+   ======================================== */
+.icon-section {
+    flex: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0 20px;
+}
+
+.shield-icon-container {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 24px;
+    opacity: 0;
+    animation: logoPopIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s forwards;
+}
+
+.shield-icon {
+    width: 40px;
+    height: 40px;
+}
+
+@keyframes logoPopIn {
+    from {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ========================================
+   Message Section
+   ======================================== */
+.message-section {
+    text-align: center;
+    padding: 0 8px 24px;
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+}
+
+.access-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    line-height: 1.15;
+}
+
+.access-description {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+.accent-dot {
+    color: var(--accent-red);
+    font-weight: 700;
+}
+
+/* ========================================
+   Permissions List
+   ======================================== */
+.permissions-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 4px 28px;
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.75s forwards;
+}
+
+.permission-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 18px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.permission-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.permission-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+}
+
+.permission-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.permission-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.2px;
+}
+
+.permission-desc {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--text-tertiary);
+    line-height: 1.3;
+}
+
+/* ========================================
+   CTA Section
+   ======================================== */
+.cta-section {
+    padding-top: 8px;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards;
+}
+
+.allow-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 18px 32px;
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: none;
+    border-radius: 16px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.allow-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 255, 255, 0.15);
+}
+
+.allow-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.btn-check {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.allow-btn:hover .btn-check {
+    transform: scale(1.1);
+}
+
+.deny-btn {
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 12px;
+    transition: color 0.3s ease;
+    letter-spacing: 0.2px;
+}
+
+.deny-btn:hover {
+    color: var(--text-secondary);
+}
+
+/* ========================================
+   Animations
+   ======================================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   Responsive
+   ======================================== */
+@media (max-width: 480px) {
+    .access-screen {
+        padding: 48px 24px 40px;
+    }
+
+    .access-title {
+        font-size: 1.5rem;
+    }
+
+    .access-description {
+        font-size: 0.9rem;
+    }
+
+    .permission-item {
+        padding: 14px 16px;
+    }
+}
+
+@media (max-width: 360px) {
+    .access-screen {
+        padding: 40px 20px 32px;
+    }
+
+    .access-title {
+        font-size: 1.35rem;
+    }
+
+    .allow-btn {
+        padding: 16px 24px;
+        font-size: 1rem;
+        border-radius: 14px;
+    }
+}
+
+@media (min-width: 600px) {
+    .access-screen {
+        max-width: 540px;
+        margin: 0 auto;
+    }
+}

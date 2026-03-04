@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOAD - Connect Google Fit</title>
+    <meta name="description" content="Connect your LOAD app to Google Fit to sync your fitness data.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/connect-googlefit.css">
+</head>
+
+<body>
+    <!-- Subtle background glow -->
+    <div class="bg-glow">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+
+    <div class="connect-screen">
+        <!-- Top brand mark -->
+        <div class="brand-mark">
+            <span class="brand-text">LOAD</span><span class="brand-dot">.</span>
+        </div>
+
+        <!-- Google Fit Logo -->
+        <div class="logo-section">
+            <div class="fit-logo-container">
+                <!-- Google Fit logo — local image -->
+                <img class="fit-logo" src="../assets/google-fit-logo.png" alt="Google Fit"
+                    style="width:150px;height:150px;object-fit:contain;">
+            </div>
+        </div>
+
+        <!-- Connect Message -->
+        <div class="message-section">
+            <h1 class="connect-title">Connect to Google Fit</h1>
+            <p class="connect-description">
+                Connect your fitness app to Google Fit to sync data<span class="accent-dot">.</span>
+            </p>
+        </div>
+
+        <!-- Proceed Button -->
+        <div class="cta-section">
+            <button id="proceed-btn" class="proceed-btn" type="button">
+                Proceed
+                <svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+            </button>
+            <button id="skip-btn" class="skip-btn" type="button">Skip for now</button>
+        </div>
+    </div>
+
+    <script src="../js/connect-googlefit.js"></script>
+</body>
+
+</html>

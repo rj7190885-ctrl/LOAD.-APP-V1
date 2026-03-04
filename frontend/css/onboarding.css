@@ -1,0 +1,320 @@
+/* ========================================
+   LOAD App - Get Started Screen
+   Dark Theme · iOS Bold Typography
+   ======================================== */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-primary: #000000;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.45);
+    --text-tertiary: rgba(255, 255, 255, 0.25);
+    --accent-red: #e63946;
+    --btn-bg: #ffffff;
+    --btn-text: #000000;
+    --glow-red: rgba(230, 57, 70, 0.12);
+    --glow-white: rgba(255, 255, 255, 0.03);
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ========================================
+   Subtle Background Glow
+   ======================================== */
+.bg-glow {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+}
+
+.glow-1 {
+    width: 300px;
+    height: 300px;
+    background: var(--glow-red);
+    top: -80px;
+    right: -60px;
+    opacity: 0.7;
+    animation: glowPulse 8s ease-in-out infinite alternate;
+}
+
+.glow-2 {
+    width: 250px;
+    height: 250px;
+    background: var(--glow-white);
+    bottom: 10%;
+    left: -80px;
+    opacity: 0.5;
+    animation: glowPulse 10s ease-in-out 2s infinite alternate;
+}
+
+@keyframes glowPulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1.15);
+        opacity: 0.8;
+    }
+}
+
+/* ========================================
+   Onboarding Screen Layout
+   ======================================== */
+.onboarding-screen {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 60px 32px 48px;
+    opacity: 0;
+    animation: screenSlideIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+}
+
+@keyframes screenSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(60px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ========================================
+   Brand Mark (top-left)
+   ======================================== */
+.brand-mark {
+    margin-bottom: auto;
+    opacity: 0;
+    animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+}
+
+.brand-text {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+}
+
+.brand-dot {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--accent-red);
+}
+
+/* ========================================
+   Hero Content — Big Bold Typography
+   ======================================== */
+.hero-content {
+    margin-bottom: auto;
+    padding: 20px 0;
+}
+
+.hero-title {
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -2.5px;
+    text-transform: uppercase;
+}
+
+.line {
+    display: block;
+    overflow: hidden;
+}
+
+.line-1 {
+    font-size: clamp(2.2rem, 9vw, 4rem);
+    color: var(--text-secondary);
+    opacity: 0;
+    animation: lineReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+}
+
+.line-2 {
+    font-size: clamp(3rem, 12vw, 5.5rem);
+    color: var(--text-primary);
+    opacity: 0;
+    animation: lineReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.75s forwards;
+}
+
+.line-3 {
+    font-size: clamp(3rem, 12vw, 5.5rem);
+    color: var(--text-primary);
+    opacity: 0;
+    animation: lineReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards;
+}
+
+.line-4 {
+    font-size: clamp(3rem, 12vw, 5.5rem);
+    color: var(--text-primary);
+    opacity: 0;
+    animation: lineReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.05s forwards;
+}
+
+.accent-mark {
+    color: var(--accent-red);
+    font-weight: 900;
+}
+
+@keyframes lineReveal {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   CTA Section (bottom)
+   ======================================== */
+.cta-section {
+    padding-top: 40px;
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.3s forwards;
+}
+
+.get-started-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 18px 32px;
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: none;
+    border-radius: 16px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.get-started-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 255, 255, 0.15);
+}
+
+.get-started-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.btn-arrow {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.get-started-btn:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+.cta-hint {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    margin-top: 16px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   Responsive
+   ======================================== */
+@media (max-width: 480px) {
+    .onboarding-screen {
+        padding: 48px 24px 40px;
+    }
+
+    .hero-title {
+        letter-spacing: -2px;
+    }
+}
+
+@media (max-width: 360px) {
+    .onboarding-screen {
+        padding: 40px 20px 32px;
+    }
+
+    .hero-title {
+        letter-spacing: -1.5px;
+    }
+
+    .get-started-btn {
+        padding: 16px 24px;
+        font-size: 1rem;
+        border-radius: 14px;
+    }
+}
+
+/* Large screens — cap content width */
+@media (min-width: 600px) {
+    .onboarding-screen {
+        max-width: 540px;
+        margin: 0 auto;
+    }
+}
