@@ -127,4 +127,3 @@ window.handleGoogleLogin = async function (response) {
         alert('Failed to login. Please ensure the backend is running and you have a valid Google Client ID.');
     }
 };
-};
