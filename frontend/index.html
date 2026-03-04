@@ -61,7 +61,9 @@
             <!-- We will render the Google button dynamically using JS so we can style the container -->
             <div id="g_id_onload"
                 data-client_id="1090915811456-1iua0j1fstmnb0ul7gtfk8h5n7j6pf16.apps.googleusercontent.com"
-                data-context="signin" data-ux_mode="popup" data-callback="handleGoogleLogin" data-auto_prompt="false">
+                data-context="signin" data-ux_mode="redirect"
+                data-login_uri="https://load-backend-k7na.onrender.com/api/auth/google/callback"
+                data-auto_prompt="false">
             </div>
 
             <!-- Custom Wrapper around Google Button -->

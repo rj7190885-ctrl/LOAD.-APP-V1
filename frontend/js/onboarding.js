@@ -3,6 +3,21 @@
    ======================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
+    // ---- Handle Google Auth Redirect Flow ----
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    const userStr = urlParams.get('user');
+
+    if (token && userStr) {
+        // Save the session details securely to localStorage
+        localStorage.setItem('load_token', token);
+        localStorage.setItem('load_user', userStr);
+
+        // Clean the URL so the token doesn't stay visible in the address bar
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+    // ------------------------------------------
+
     const btn = document.getElementById('get-started-btn');
 
     btn.addEventListener('click', (e) => {

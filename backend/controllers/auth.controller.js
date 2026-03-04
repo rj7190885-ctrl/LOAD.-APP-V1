@@ -96,3 +96,68 @@ exports.googleLogin = async (req, res) => {
         res.status(500).json({ error: 'Authentication failed. Please try again later.' });
     }
 };
+
+/**
+ * Handle Google Login Callback mapping to Supabase User (Form POST Redirect)
+ */
+exports.googleLoginCallback = async (req, res) => {
+    try {
+        const { credential } = req.body;
+
+        if (!credential) {
+            return res.redirect('https://load-app-v1.vercel.app/index.html?error=no_credential');
+        }
+
+        // 1. Verify the Google ID Token
+        const ticket = await googleClient.verifyIdToken({
+            idToken: credential,
+            audience: GOOGLE_CLIENT_ID,
+        });
+
+        const payload = ticket.getPayload();
+        const { sub: googleId, email, name, picture } = payload;
+
+        // 2. Check if user already exists in Supabase
+        let { data: user, error: fetchError } = await supabase
+            .from('users')
+            .select('*')
+            .eq('google_id', googleId)
+            .single();
+
+        if (fetchError && fetchError.code !== 'PGRST116') {
+            throw fetchError;
+        }
+
+        // 3. If User doesn't exist, create one
+        if (!user) {
+            const { data: newUser, error: insertError } = await supabase
+                .from('users')
+                .insert([{ google_id: googleId, email, name, picture }])
+                .select()
+                .single();
+
+            if (insertError) throw insertError;
+            user = newUser;
+        } else {
+            // Update user picture/name just in case they changed
+            await supabase
+                .from('users')
+                .update({ picture, name, updated_at: new Date() })
+                .eq('google_id', googleId);
+        }
+
+        // 4. Generate Application JWT for session management
+        const token = jwt.sign(
+            { userId: user.id, email: user.email, name: user.name, picture: user.picture },
+            JWT_SECRET,
+            { expiresIn: '7d' }
+        );
+
+        // 5. Redirect back to frontend onboarding with token in query params
+        res.redirect(`https://load-app-v1.vercel.app/pages/onboarding.html?token=${token}&user=${encodeURIComponent(JSON.stringify({ id: user.id, name: user.name, email: user.email, picture: user.picture }))}`);
+
+    } catch (error) {
+        console.error('Google Auth Callback Error:', error);
+        res.redirect('https://load-app-v1.vercel.app/index.html?error=auth_failed');
+    }
+};
