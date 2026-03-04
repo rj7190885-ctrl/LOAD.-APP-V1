@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // Send the ID token to our backend
-            const res = await fetch('http://localhost:5000/api/auth/google', {
+            const res = await fetch('https://load-backend-k7na.onrender.com/api/auth/google', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
