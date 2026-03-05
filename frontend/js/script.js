@@ -4,6 +4,13 @@
    ======================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Check if user is already logged in
+    const existingToken = localStorage.getItem('load_token');
+    if (existingToken) {
+        window.location.href = 'pages/dashboard.html';
+        return; // Stop animation execution
+    }
+
     const splashScreen = document.getElementById('splash-screen');
     const splashLogo = document.querySelector('.splash-logo');
     const card = document.querySelector('.glass-card');
