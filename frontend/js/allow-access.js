@@ -23,10 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(window.location.search);
         let token = urlParams.get('token');
         if (!token) {
-            token = localStorage.getItem('authToken');
+            token = localStorage.getItem('load_token');
         } else {
             // Save it for future use
-            localStorage.setItem('authToken', token);
+            localStorage.setItem('load_token', token);
         }
         return token;
     }

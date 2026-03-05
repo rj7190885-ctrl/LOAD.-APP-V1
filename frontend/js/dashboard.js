@@ -522,7 +522,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const fitConnected = urlParams.get('fit_connected');
 
-        let token = localStorage.getItem('authToken');
+        let token = localStorage.getItem('load_token');
         let hasData = false;
 
         // Start in empty state
