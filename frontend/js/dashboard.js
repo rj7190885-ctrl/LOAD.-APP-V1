@@ -534,7 +534,7 @@
             try {
                 const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
                     ? 'http://localhost:5000'
-                    : 'https://load-app-v1-api.vercel.app';
+                    : 'https://load-backend-k7na.onrender.com';
 
                 const response = await fetch(`${API_BASE}/api/fit/sync`, {
                     headers: { 'Authorization': `Bearer ${token}` }

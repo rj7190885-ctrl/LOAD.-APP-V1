@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Adjust base URL as needed based on environment.
             const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
                 ? 'http://localhost:5000'
-                : 'https://load-app-v1-api.vercel.app'; // Change to absolute URL of backend
+                : 'https://load-backend-k7na.onrender.com'; // Change to absolute URL of backend
 
             const response = await fetch(`${API_BASE}/api/fit/auth-url`, { headers });
 
