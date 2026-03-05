@@ -513,19 +513,115 @@
     }
 
     // ────────────────────────────────────
-    //  INIT
+    //  INIT & REAL DATA SYNC
     // ────────────────────────────────────
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
         setGreeting();
 
-        const days = generate7Days();
-        const data = calcAllMetrics(days);
+        // Check if user is connected to Google Fit and trigger sync
+        const urlParams = new URLSearchParams(window.location.search);
+        const fitConnected = urlParams.get('fit_connected');
 
-        renderRecovery(data);
-        renderStrain(data);
-        renderMetrics(data);
-        renderChart('rhr-chart', data.rhrTrend, data.dayLabels, '#ef4444');
-        renderChart('recovery-chart', data.recoveryTrend, data.dayLabels, '#22c55e');
+        let token = localStorage.getItem('authToken');
+        let hasData = false;
+
+        // Start in empty state
+        document.querySelector('.trends-section').style.display = 'none';
+        document.getElementById('recovery-label').textContent = 'Loading...';
+        document.getElementById('recovery-sub').textContent = 'Checking connection';
+
+        if (token) {
+            try {
+                const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+                    ? 'http://localhost:5000'
+                    : 'https://load-app-v1-api.vercel.app';
+
+                const response = await fetch(`${API_BASE}/api/fit/sync`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    const syncResult = await response.json();
+                    if (syncResult && syncResult.data) {
+                        hasData = true;
+                        console.log("Real data synced from Google Fit:", syncResult.data);
+
+                        // We have real data! Let's render the mock charts with real inserts for now
+                        // (In a full prod app we would override the whole 'days' generator with real arrays)
+                        const days = generate7Days();
+                        let data = calcAllMetrics(days);
+
+                        const realData = syncResult.data;
+                        if (realData.recovery_score) {
+                            data.recoveryScore = realData.recovery_score;
+                        }
+                        if (realData.resting_heart_rate) {
+                            data.metrics[0].value = realData.resting_heart_rate;
+                        }
+                        if (realData.total_steps) {
+                            data.metrics[4].value = realData.total_steps.toLocaleString();
+                        }
+
+                        renderRecovery(data);
+                        renderStrain(data);
+                        renderMetrics(data);
+                        document.querySelector('.trends-section').style.display = 'block';
+                        renderChart('rhr-chart', data.rhrTrend, data.dayLabels, '#ef4444');
+                        renderChart('recovery-chart', data.recoveryTrend, data.dayLabels, '#22c55e');
+                    }
+                }
+
+            } catch (err) {
+                console.error("Failed to sync with backend.", err);
+            }
+        }
+
+        // Render Empty State if no real data was found
+        if (!hasData) {
+            document.getElementById('recovery-score').textContent = "--";
+            document.getElementById('ring-progress').style.stroke = "var(--border)";
+            document.getElementById('ring-progress').style.strokeDashoffset = 553; // empty
+
+            document.getElementById('recovery-label').textContent = "No Data";
+            document.getElementById('recovery-label').style.color = "var(--text-sec)";
+
+            // Turn the sub title into a connect button link
+            document.getElementById('recovery-sub').innerHTML = `
+                <a href="connect-googlefit.html" style="color:var(--text); text-decoration:underline; font-weight:600; font-size: 1.1rem; padding: 10px; display:inline-block; background:rgba(255,255,255,0.05); border-radius: 8px; margin-top: 5px;">
+                  Connect Google Fit
+                </a>
+            `;
+
+            document.getElementById('strain-score').textContent = "--";
+            document.getElementById('strain-bar').style.width = '0%';
+            document.getElementById('active-minutes').textContent = '-- min';
+            document.getElementById('hr-zone-time').textContent = '-- min';
+
+            // Render empty metrics grid
+            const emptyMetrics = [
+                { name: 'Resting HR', value: '--', tooltip: 'Connect Google Fit to track.' },
+                { name: 'HR Recovery', value: '--', tooltip: 'Connect Google Fit to track.' },
+                { name: 'O₂ Stability', value: '--', tooltip: 'Connect Google Fit to track.' },
+                { name: 'Sleep Stability', value: '--', tooltip: 'Connect Google Fit to track.' },
+                { name: 'Total Steps', value: '--', tooltip: 'Connect Google Fit to track.' },
+                { name: 'Sedentary Time', value: '--', tooltip: 'Connect Google Fit to track.' },
+                { name: 'Consistency', value: '--', tooltip: 'Connect Google Fit to track.' },
+                { name: 'Stress Index', value: '--', tooltip: 'Connect Google Fit to track.' }
+            ];
+
+            const grid = document.getElementById('metrics-grid');
+            grid.innerHTML = '';
+            emptyMetrics.forEach(m => {
+                grid.innerHTML += `
+                    <div class="metric-card" data-tooltip="${m.tooltip}">
+                        <div class="metric-name">${m.name}</div>
+                        <div class="metric-value-row">
+                            <span class="metric-value">${m.value}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
     });
 
 })();

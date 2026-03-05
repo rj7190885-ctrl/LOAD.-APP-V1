@@ -18,8 +18,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     }
 
+    // Helper to get JWT token from URL params (from previous login step) or local storage
+    function getAuthToken() {
+        const urlParams = new URLSearchParams(window.location.search);
+        let token = urlParams.get('token');
+        if (!token) {
+            token = localStorage.getItem('authToken');
+        } else {
+            // Save it for future use
+            localStorage.setItem('authToken', token);
+        }
+        return token;
+    }
+
     // Allow Access button — grant permission then navigate
-    allowBtn.addEventListener('click', (e) => {
+    allowBtn.addEventListener('click', async (e) => {
         // Ripple effect
         const ripple = document.createElement('span');
         const rect = allowBtn.getBoundingClientRect();
@@ -42,19 +55,42 @@ document.addEventListener('DOMContentLoaded', () => {
         allowBtn.appendChild(ripple);
         setTimeout(() => ripple.remove(), 500);
 
-        // Brief success feedback
-        allowBtn.style.background = '#34A853';
-        allowBtn.style.color = '#ffffff';
-        allowBtn.innerHTML = `
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 6L9 17l-5-5" />
-            </svg>
-            Connected
-        `;
+        try {
+            allowBtn.innerText = 'Connecting...';
 
-        // Navigate after visual feedback
-        setTimeout(navigateNext, 800);
+            const token = getAuthToken();
+            const headers = {};
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            }
+
+            // In local development, the API runs on port 5000. In prod, it's relative or to a Vercel URL.
+            // Adjust base URL as needed based on environment.
+            const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+                ? 'http://localhost:5000'
+                : 'https://load-app-v1-api.vercel.app'; // Change to absolute URL of backend
+
+            const response = await fetch(`${API_BASE}/api/fit/auth-url`, { headers });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error("Failed to get auth URL:", errorData);
+                alert((errorData.error && errorData.error.message) || errorData.error || "Failed to initialize Google Fit connection. Please try again.");
+                allowBtn.innerText = 'Allow Access';
+                return;
+            }
+
+            const data = await response.json();
+            if (data && data.url) {
+                // Redirect user to Google OAuth screen
+                window.location.href = data.url;
+            }
+
+        } catch (err) {
+            console.error("Error triggering OAuth:", err);
+            allowBtn.innerText = 'Allow Access';
+            alert("Network error occurred. Ensure the backend server is running.");
+        }
     });
 
     // Deny button — skip
